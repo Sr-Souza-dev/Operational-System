@@ -16,7 +16,7 @@ void Shell::openShell(Memory memo, Disc disc, Cpu cpu){
     showHelp();
     string cmd;
     do{
-        cout<<this->userName<<"(shell):~ ";
+        cout<<this->userName<<"(shell) $ > ";
         getline(cin,cmd);
 
         if(     cmd == "cpuInf" ){cpu.showInfo();}
@@ -41,4 +41,6 @@ void Shell::showHelp(){
     cout<<" <help>       para exibir este menu de opções"<<endl;
     cout<<" <exit>       para finalizar o shell"<<endl;
     cout<<"----------------------------------------------------------------------\n"<<endl;
+
 }
+
