@@ -4,8 +4,13 @@
 #include <iostream>
 using namespace std;
 
+
 class Cpu
 {
+    private:
+    string cores[4];
+    
+
     public:
         Cpu() = default;
         void showInfo();
