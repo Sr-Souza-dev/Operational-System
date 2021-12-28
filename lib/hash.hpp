@@ -11,6 +11,7 @@
 #include <string>
 #include <list>
 #include <array>
+#include <vector>
 
 
 using namespace std;
@@ -31,20 +32,21 @@ class HashTable {
     struct Entry {
         int index;
         KeyType key;
-        ValueType value;
+        ValueType value = ValueType("noneNa","00:00","noneId","noneDes",1);
     };
 
     /* Número atual de itens dentro da tabela */
     unsigned int entries_n = 0;
 
     /* Tamanho total da tabela a ser alocada */
-    unsigned int MAX_SIZE = 5;
+    int MAX_SIZE = 0;
 
     /* Um item do tipo Entry vazio. Utilizado como valor default de itens */
     struct Entry DEFAULT_VALUE;
 
     /* Tabela de ites do tipo Entry com tamanho máximo permitido */
-    struct Entry table[MAX_SIZE];
+    //struct Entry (*table)[5];
+    vector<struct Entry> table;
 
     /* Método privado para uso exclusivo de debbuging */
     void debbug(struct Entry* entry)
@@ -131,6 +133,10 @@ class HashTable {
     {
         /* Definindo o tamanho máximo da tabela Hash */
         MAX_SIZE = size;
+        struct Entry aux;
+        for(int i = 0; i < size; i++){
+            table.push_back(aux);
+        }
 
         cout << MAX_SIZE << endl;
 
