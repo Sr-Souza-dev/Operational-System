@@ -1,13 +1,10 @@
 #ifndef _SHELL_HPP
 #define _SHELL_HPP
 
+#include "../kernel/kernel.hpp"
 #include <iostream>
+#include <unistd.h>
 using namespace std;
-
-#include "../cpu/Cpu.hpp"
-#include "../disc/Disc.hpp"
-#include "../memory/Memory.hpp"
-
 #define userNameLenght 20
 
 
@@ -15,10 +12,14 @@ class Shell
 {
     private:
         string userName;
+        Kernel* kernel;
 
     public:
-        Shell(string user);
-        void openShell(Memory memo, Disc disc, Cpu cpu);
+        Shell(Kernel* kernel);
+        
+        string getUserName();
+
+        void openShell();
         void showHelp();
 };
 

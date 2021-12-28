@@ -1,35 +1,18 @@
-#include <unistd.h>
+#include "components/headers/file.hpp"
+#include "kernel/kernel.hpp"
+#include "shell/shell.hpp"
 
-using namespace std;
-#include "shell/Shell.hpp"
+int main(){
 
+    //Define o diretório do arquivo e faz a leitura do json (config Iniciais)
+    FileJson hardware = FileJson("config/hardware.json");
+    Json hardwareConfig = hardware.getJsonFile();
 
-//Recupera o nome do usuário logado na máquina
-string getUserName(){
-    char uName[userNameLenght];
-    int result = getlogin_r(uName, userNameLenght);
-        
-    if(result != 0){
-        return "user";
-    } else{
-        return uName;
-    }
-}
+    //Define o kernel de acordo com as conf Iniciais 
+    Kernel kernel = Kernel(hardwareConfig["cpu"], hardwareConfig["disc"], hardwareConfig["memory"]);
 
-
-int main()
-{
-    //Definindo Instâncias do sistema
-    string  userName    = getUserName();
+    Shell shell = Shell(&kernel);
+    shell.openShell();
     
-    Shell   shell       = Shell(userName);
-    Memory  memo        = Memory();
-    Disc    disc        = Disc();
-    Cpu     cpu         = Cpu();
-
-
-    //Abrindo o shell
-    shell.openShell(memo, disc, cpu);
-
     return 0;
 }

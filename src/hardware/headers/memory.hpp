@@ -7,7 +7,9 @@ using namespace std;
 class Memory
 {
     public:
-        Memory() = default;
+        int size;
+
+        Memory(int size);
         void showInfo();
 };
 
