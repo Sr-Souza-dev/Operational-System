@@ -141,8 +141,6 @@ class HashTable {
             table.push_back(aux);
         }
 
-        cout << MAX_SIZE << endl;
-
         this->DEFAULT_VALUE.index = -1;
         /* gera semente aleatória para o método std::rand() */
         srand(time(nullptr));
