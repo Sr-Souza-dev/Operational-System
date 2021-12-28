@@ -9,4 +9,5 @@ Memory::Memory(int size){
 //Functions
 void Memory::showInfo(){
     cout<<"\n Verificando informações da Memoria"<<endl;
+    hash_table->Print();
 }

@@ -134,6 +134,8 @@ class HashTable {
         /* Definindo o tamanho máximo da tabela Hash */
         MAX_SIZE = size;
         struct Entry aux;
+        aux.key = 15;
+
         for(int i = 0; i < size; i++){
             table.push_back(aux);
         }
@@ -147,6 +149,12 @@ class HashTable {
         /* Inicializamos nossa tabela inteira com nosso valor default */
         for (auto& e : this->table) {
             e.index = this->DEFAULT_VALUE.index;
+        }
+    }
+
+    void Print(){
+        for(Entry data : table){
+            cout << data.key <<endl;
         }
     }
 
