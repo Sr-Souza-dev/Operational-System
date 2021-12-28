@@ -134,9 +134,10 @@ class HashTable {
         /* Definindo o tamanho máximo da tabela Hash */
         MAX_SIZE = size;
         struct Entry aux;
-        aux.key = 15;
+        aux.key = -1;
 
         for(int i = 0; i < size; i++){
+            aux.value.core = i;
             table.push_back(aux);
         }
 
@@ -153,10 +154,23 @@ class HashTable {
     }
 
     void Print(){
+        table.front().value.printHead(1);
+        int used = 0;
         for(Entry data : table){
-            cout << data.key <<endl;
+            data.value.print();
+            if(data.value.name != "noneNa"){
+                used++;
+            }
         }
+        table.front().value.printFooter();
+
+        cout<<"Total de Memória RAM:    "<<table.size()<<endl;
+        cout<<"Memória RAM Utilizada:   "<<used<<endl;
+        cout<<"Memória RAM Disponível:  "<<table.size() - used<<endl;
     }
+
+
+
 
     /*
      * Busca por uma chave dentro da tabela utilizando a função hash
