@@ -5,7 +5,7 @@ Disc::Disc(int size)
 {
     this->size = size;
     
-    Data data = Data("noneNa",".none","000 KB","00/00/0000 - 00:00");
+    Data data = Data("","","","00/00/0000 - 00:00");
     for(int i=0; i < size; i++){
         this->disc.push(data);
     } 
@@ -21,7 +21,7 @@ void Disc::showInfo()
         disc.top().printHead();
         for(long unsigned int i = 0; i < disc.size(); i++){
             discAux.top().print();
-            if(discAux.top().name != "noneNa"){
+            if(discAux.top().name != ""){
                 size++;
             }
             discAux.pop();

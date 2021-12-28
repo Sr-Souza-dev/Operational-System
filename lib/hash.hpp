@@ -32,7 +32,7 @@ class HashTable {
     struct Entry {
         int index;
         KeyType key;
-        ValueType value = ValueType("noneNa","00:00","noneId","noneDes",1);
+        ValueType value = ValueType("","","","",1);
     };
 
     /* Número atual de itens dentro da tabela */
@@ -158,7 +158,7 @@ class HashTable {
         int used = 0;
         for(Entry data : table){
             data.value.print();
-            if(data.value.name != "noneNa"){
+            if(data.value.name != ""){
                 used++;
             }
         }
