@@ -29,8 +29,8 @@ void Disc::showInfo()
         disc.top().printFooter();
 
     }
-    cout<<"Total Memory:      "<<size<<endl;
-    cout<<"Memory Utilizados: "<<sizeAux<<endl;
-    cout<<"Memory Diponíveis: "<<size - sizeAux<<endl;
+    cout<<"Memória Total:     "<<size<<endl;
+    cout<<"Memória Utilizada: "<<sizeAux<<endl;
+    cout<<"Memória Diponível: "<<size - sizeAux<<endl;
     cout<<endl;
 }

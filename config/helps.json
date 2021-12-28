@@ -1,0 +1,24 @@
+{
+    "help" : [
+        {
+            "command" : "cpuInfo",
+            "description" : "Exibe de forma detalhada informações dos Core"
+        },
+        {
+            "command" : "memoryInfo",
+            "description" : "Verifica armazenanmento e utilização da memoria RAM"
+        },
+        {
+            "command" : "discInfo",
+            "description" : "Exibe de forma detalhada informações de armazenamento do disco"
+        },
+        {
+            "command" : "help",
+            "description" : "Imprime opçẽs de comandos para o diretório atual"
+        },
+        {
+            "command" : "exit",
+            "description" : "Finalizar o programa"
+        }
+    ]
+}

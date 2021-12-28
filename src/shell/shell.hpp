@@ -2,6 +2,7 @@
 #define _SHELL_HPP
 
 #include "../kernel/kernel.hpp"
+#include "../components/headers/file.hpp"
 #include <iostream>
 #include <unistd.h>
 using namespace std;
@@ -12,7 +13,9 @@ class Shell
 {
     private:
         string userName;
+        string directory;
         Kernel* kernel;
+        Json helps;
 
     public:
         Shell(Kernel* kernel);
@@ -21,6 +24,7 @@ class Shell
 
         void openShell();
         void showHelp();
+        void loadHelps();
 };
 
 
