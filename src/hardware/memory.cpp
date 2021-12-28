@@ -3,6 +3,7 @@
 //Constructor
 Memory::Memory(int size){
     this->size = size;
+    hash_table = new HashTable<int, Process>(size);
 }
 
 //Functions
