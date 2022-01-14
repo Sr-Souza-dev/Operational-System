@@ -4,12 +4,8 @@
 
 int main(){
 
-    //Define o diretório do arquivo e faz a leitura do json (config Iniciais)
-    FileJson hardware = FileJson("config/hardware.json");
-    Json hardwareConfig = hardware.getJsonFile();
-
     //Define o kernel de acordo com as conf Iniciais 
-    Kernel kernel = Kernel(hardwareConfig["cpu"], hardwareConfig["disc"], hardwareConfig["memory"]);
+    Kernel kernel = Kernel();
 
     Shell shell = Shell(&kernel);
     shell.openShell();

@@ -3,7 +3,7 @@
 //Constructor
 Cpu::Cpu(int coreQT){
     this -> coreQT = coreQT;
-    Process proc = Process("","","","");
+    Process proc = Process(0, 0, 0, 0, 0, "");
 
     for(int i=0; i<coreQT; i++){
         proc.core = i+1;
@@ -18,7 +18,7 @@ void Cpu::showInfo(){
     process.front().printHead();
     for(Process proc:process){
         proc.print();
-        if(proc.name != ""){
+        if(proc.id != 0){
             used++;
         }
     }

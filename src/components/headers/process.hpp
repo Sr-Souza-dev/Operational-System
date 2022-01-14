@@ -8,14 +8,17 @@ using namespace std;
 class Process{
     
     public:
-    string description;
-    string name;
-    string hour;
-    string id;
-    int core;
+        int id;
+        int core;
+        int cycles;
+        int maxQuantum;
+        int timeStamp;
+        int priority;
+        int state;          // 0 - Bloqueado; 1 - Execução; 2 - Pronto;
+        string initType;
 
     //Constructors
-    Process(string name, string hour, string id, string description, int core = 0);
+    Process(int id, int cycles, int maxQuantum, int timeStamp, int priority, string initType, int core = 0);
 
     //Functions
     void print(int opt = 0);

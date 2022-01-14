@@ -32,7 +32,7 @@ class HashTable {
     struct Entry {
         int index;
         KeyType key;
-        ValueType value = ValueType("","","","",1);
+        ValueType value = ValueType(0, 0, 0, 0, 0, "");
     };
 
     /* Número atual de itens dentro da tabela */
@@ -156,7 +156,7 @@ class HashTable {
         int used = 0;
         for(Entry data : table){
             data.value.print();
-            if(data.value.name != ""){
+            if(data.value.id != 0){
                 used++;
             }
         }

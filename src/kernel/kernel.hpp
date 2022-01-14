@@ -1,6 +1,7 @@
 #ifndef _KERNEL_HPP
 #define _KERNEL_HPP
 
+#include "../components/headers/file.hpp"
 #include "../hardware/headers/cpu.hpp"
 #include "../hardware/headers/disc.hpp"
 #include "../hardware/headers/memory.hpp"
@@ -14,7 +15,7 @@ class Kernel{
     Disc *disc;
     Memory *memory;
 
-    Kernel(int coreQT, int discSize, int memorySize);
+    Kernel();
 
 };
 

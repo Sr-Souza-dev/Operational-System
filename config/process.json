@@ -1,0 +1,122 @@
+[
+    {
+        "processo": 1,
+        "ciclos": 10,
+        "max_quantum": 2,
+        "init_type": "cpu-bound",
+        "timestamp": 0,
+        "prioridade": 4
+    },
+    {
+        "processo": 2,
+        "ciclos": 4,
+        "max_quantum": 1,
+        "init_type": "cpu-bound",
+        "timestamp": 0,
+        "prioridade": 2
+    },
+    {
+        "processo": 3,
+        "ciclos": 8,
+        "max_quantum": 1,
+        "init_type": "io-bound",
+        "timestamp": 0,
+        "prioridade": 0
+    },
+    {
+        "processo": 4,
+        "ciclos": 13,
+        "max_quantum": 3,
+        "init_type": "memory-bound",
+        "timestamp": 0,
+        "prioridade": 1
+    },
+    {
+        "processo": 5,
+        "ciclos": 22,
+        "max_quantum": 3,
+        "init_type": "memory-bound",
+        "timestamp": 0,
+        "prioridade": 2
+    },
+    {
+        "processo": 6,
+        "ciclos": 2,
+        "max_quantum": 1,
+        "init_type": "memory-bound",
+        "timestamp": 0,
+        "prioridade": 2
+    },
+    {
+        "processo": 7,
+        "ciclos": 5,
+        "max_quantum": 1,
+        "init_type": "io-bound",
+        "timestamp": 0,
+        "prioridade": 3
+    },
+    {
+        "processo": 8,
+        "ciclos": 17,
+        "max_quantum": 3,
+        "init_type": "io-bound",
+        "timestamp": 0,
+        "prioridade": 4
+    },
+    {
+        "processo": 9,
+        "ciclos": 10,
+        "max_quantum": 2,
+        "init_type": "cpu-bound",
+        "timestamp": 0,
+        "prioridade": 4
+    },
+    {
+        "processo": 10,
+        "ciclos": 14,
+        "max_quantum": 2,
+        "init_type": "cpu-bound",
+        "timestamp": 0,
+        "prioridade": 3
+    },
+    {
+        "processo": 11,
+        "ciclos": 18,
+        "max_quantum": 1,
+        "init_type": "cpu-bound",
+        "timestamp": 0,
+        "prioridade": 1
+    },
+    {
+        "processo": 12,
+        "ciclos": 11,
+        "max_quantum": 3,
+        "init_type": "memory-bound",
+        "timestamp": 0,
+        "prioridade": 2
+    },
+    {
+        "processo": 13,
+        "ciclos": 19,
+        "max_quantum": 4,
+        "init_type": "cpu-bound",
+        "timestamp": 0,
+        "prioridade": 3
+    },
+    {
+        "processo": 14,
+        "ciclos": 9,
+        "max_quantum": 2,
+        "init_type": "io-bound",
+        "timestamp": 0,
+        "prioridade": 1
+    },
+    {
+        "processo": 15,
+        "ciclos": 3,
+        "max_quantum": 1,
+        "init_type": "cpu-bound",
+        "timestamp": 0,
+        "prioridade": 2
+    }
+]
