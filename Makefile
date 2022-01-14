@@ -6,7 +6,7 @@ OBJ_DIR := $(BUILD)/objects
 APP_DIR	:= $(BUILD)/
 TARGET	:= app
 INCLUDE	:= -Iinclude/
-SRC	    := $(wildcard src/*.cpp) $(wildcard src/*/*.cpp)
+SRC	    := $(wildcard src/*.cpp) $(wildcard src/*/*.cpp) $(wildcard src/kernel/scheduler/scheduler.cpp)
 
 
 OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o) 

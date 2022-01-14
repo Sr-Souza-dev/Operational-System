@@ -2,7 +2,7 @@
 #define __SCHEDULER_HPP
 
 #include "../../components/headers/process.hpp"
-#include "../components/headers/file.hpp"
+#include "../../components/headers/file.hpp"
 #include <string>
 #include <queue>
 #include <iostream>
@@ -11,10 +11,10 @@ using namespace std;
 
 class Scheduler{
     public:
-    queue<Process> processQueue;
+        queue<Process> processQueue;
 
-    Scheduler();
-
+        Scheduler();
+        void showQueue();
 };
 
 #endif
