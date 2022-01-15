@@ -18,6 +18,7 @@ class Process{
         string initType;
 
     //Constructors
+    Process(){}
     Process(int id, int cycles, int maxQuantum, int timeStamp, int priority, string initType, int core = 0);
 
     //Functions

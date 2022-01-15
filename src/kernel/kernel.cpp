@@ -11,5 +11,5 @@ Kernel::Kernel(){
 
     Scheduler scheduler = Scheduler();
 
-    //scheduler.showQueue();
+    scheduler.showProcess();
 }
