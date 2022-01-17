@@ -12,9 +12,11 @@ class Process{
         int core;
         int cycles;
         int maxQuantum;
-        int timeStamp;
+        int timeStamp;      // tempo de processamento
         int priority;
         int state;          // 0 - Bloqueado; 1 - Execução; 2 - Pronto;
+        bool blocked;
+        int currentQuantum;
         string initType;
 
     //Constructors
