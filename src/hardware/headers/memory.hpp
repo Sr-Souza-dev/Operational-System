@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include "../../components/headers/process.hpp"
-#include "../../../lib/hash.hpp"
+#include <vector>
+#include <thread>
 
 using namespace std;
 
@@ -12,11 +13,13 @@ using namespace std;
 class Memory
 {
     public:
-        HashTable<int, Process> *hash_table;
+        vector<Process> memory;
         int size;
 
         Memory(int size);
         void showInfo();
+        bool put(Process process);
+        bool del(Process process);
 };
 
 #endif

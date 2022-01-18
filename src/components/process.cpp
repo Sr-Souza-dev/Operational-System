@@ -6,10 +6,13 @@ Process::Process(int id, int cycles, int maxQuantum, int timeStamp, int priority
     this -> id = id;
     this -> cycles = cycles;
     this -> maxQuantum = maxQuantum;
+    this -> currentQuantum = maxQuantum;
     this -> timeStamp = timeStamp;
     this -> priority = priority;
     this -> initType = initType;
     this -> core = core;
+    this -> associated = false;
+    this -> penalty = 0;
 }
 
 //Functions

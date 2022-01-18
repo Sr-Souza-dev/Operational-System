@@ -8,24 +8,25 @@ using namespace std;
 class Process{
     
     public:
-        int id;
-        int core;
-        int cycles;
-        int maxQuantum;
-        int timeStamp;      // tempo de processamento
-        int priority;
+        int id;             // Identificador do processo
+        int core;           // Core que está sendo utilizado para processar determinado processo
+        int cycles;         // Quantidade de ciclos de cada processo para ser executado completamente
+        int maxQuantum;     // Valor de quantum que cada processo precisa para finalizar um ciclo
+        int timeStamp;      // Tempo de processamento
+        int priority;       // Nivél de prioridade de cada processo (1 - 4)
         int state;          // 0 - Bloqueado; 1 - Execução; 2 - Pronto;
-        bool blocked;
-        int currentQuantum;
-        string initType;
+        int penalty;        // Tempo que o processo ficará no estado bloqueado
+        bool associated;    // False - processos não associados a uma memoria/disco | true - processos associados a uma memoria/disco
+        int currentQuantum; // Valor de quantum atual do processo durante o ciclo
+        string initType;    // Tipo de recurso que o processo mais utiliza
 
     //Constructors
     Process(){}
     Process(int id, int cycles, int maxQuantum, int timeStamp, int priority, string initType, int core = 0);
 
     //Functions
-    void print(int opt = 0);
-    void printHead(int opt = 0);
-    void printFooter(int opt = 0);
+    void print(int opt = 0);        // Printa o conteúdo do processo
+    void printHead(int opt = 0);    // Printa o escopo da tabela de processo
+    void printFooter(int opt = 0);  // Printa o rodapé da tabela
 };
 #endif

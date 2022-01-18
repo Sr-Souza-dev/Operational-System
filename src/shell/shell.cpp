@@ -30,9 +30,10 @@ void Shell::loadHelps(){
     this -> helps = help.getJsonFile();
 }
 
+
 //Abre o shell para receber comandos
 void Shell::openShell(){
-
+    
     showHelp();
     string cmd;
     do{
@@ -45,7 +46,7 @@ void Shell::openShell(){
         else if(cmd == ((string)helps["help"][3]["command"]))   {showHelp();}
         else if(cmd == ((string)helps["help"][4]["command"]))   {}
         else{
-            cout<<"  Comando não inválido (<help> para mais informações!)"<<endl;
+            cout<<"  Comando inválido (<help> para mais informações!)"<<endl;
         }
 
     } while (cmd != "exit");

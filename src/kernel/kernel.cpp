@@ -8,8 +8,4 @@ Kernel::Kernel(){
     cpu  = new Cpu(hardwareConfig["cpu"]);
     disc = new Disc(hardwareConfig["disc"]);
     memory = new Memory(hardwareConfig["memory"]);
-
-    Scheduler scheduler = Scheduler();
-
-    scheduler.showProcess();
 }

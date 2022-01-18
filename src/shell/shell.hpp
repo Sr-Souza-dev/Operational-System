@@ -5,6 +5,7 @@
 #include "../components/headers/file.hpp"
 #include <iostream>
 #include <unistd.h>
+#include <thread>
 using namespace std;
 #define userNameLenght 20
 

@@ -5,7 +5,6 @@
 #include "../hardware/headers/cpu.hpp"
 #include "../hardware/headers/disc.hpp"
 #include "../hardware/headers/memory.hpp"
-#include "scheduler/scheduler.hpp"
 
 #include <iostream>
 using namespace std;
