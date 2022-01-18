@@ -19,14 +19,15 @@ int main(){
     Scheduler scheduler = Scheduler(&kernel);
 
     //Define e inicializa as diretrizes do shell
-    Shell shell = Shell(&kernel);
+    Shell shell = Shell(&kernel, &scheduler);
     
     //threads
-    thread t_init(initScheduler, &scheduler);
     thread t_shell(openShell,&shell);
+    //thread t_init(initScheduler, &scheduler);
+    
 
 
-    t_init.join();
+    //t_init.join();
     //scheduler.init();
 
     //scheduler.showProcess();

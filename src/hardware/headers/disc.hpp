@@ -5,7 +5,7 @@
 #include "../../components/headers/data.hpp"
 #include <iostream>
 #include <string>
-#include <stack>
+#include <vector>
 #include <thread>
 
 using namespace std;
@@ -13,10 +13,12 @@ using namespace std;
 class Disc
 {
     public:
-    stack <Data> disc;
+    vector <Data> disc;
     int size;
 
     Disc(int size);
-    void showInfo();    
+    void showInfo();   
+    bool put(Data data);
+    bool del(string dataName); 
 };
 #endif

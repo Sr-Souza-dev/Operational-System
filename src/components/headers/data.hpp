@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <time.h>
 
 using namespace std;
 
@@ -15,7 +16,8 @@ class Data
         string size;
         string createDate; 
 
-        Data(string name, string type, string size, string createDate);
+        Data(string name, string type, string size);
+        Data(){};
         void print();
         void printHead();
         void printFooter();

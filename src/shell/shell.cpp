@@ -2,10 +2,11 @@
 
 
 //-------------------- Constructor and Destructor ----------------
-Shell::Shell(Kernel *kernel)
+Shell::Shell(Kernel *kernel, Scheduler* scheduler)
 {
     this->userName  = getUserName();
     this->kernel    = kernel;
+    this->scheduler = scheduler;
     this->directory = "Home";
 
     loadHelps();
@@ -43,14 +44,22 @@ void Shell::openShell(){
         if(     cmd == ((string)helps["help"][0]["command"]))   {kernel->cpu->showInfo();}
         else if(cmd == ((string)helps["help"][1]["command"]))   {kernel->memory->showInfo();}
         else if(cmd == ((string)helps["help"][2]["command"]))   {kernel->disc->showInfo();}
-        else if(cmd == ((string)helps["help"][3]["command"]))   {showHelp();}
-        else if(cmd == ((string)helps["help"][4]["command"]))   {}
+        else if(cmd == ((string)helps["help"][3]["command"]))   {htop();}
+        else if(cmd == ((string)helps["help"][4]["command"]))   {
+            
+            scheduler->load();
+        }
+        else if(cmd == ((string)helps["help"][5]["command"]))   {showHelp();}
+        else if(cmd == ((string)helps["help"][6]["command"]))   {}
         else{
             cout<<"  Comando inválido (<help> para mais informações!)"<<endl;
         }
 
     } while (cmd != "exit");
 }
+
+// system("clear||cls");
+//     kernel->cpu->showInfo();
 
 //Exibe um menu de informações com todos comandos possíveis
 void Shell::showHelp(){
@@ -64,4 +73,8 @@ void Shell::showHelp(){
         loadHelps();
     }
     cout<<endl;    
+}
+
+void Shell::htop(){
+    scheduler->showProcess();
 }

@@ -12,15 +12,25 @@ Cpu::Cpu(int coreQT){
 }
 
 //Functions
-void Cpu::processRegister(Process process_ToRegister){
-    for(Process proc:process){
-        if(proc.id == 0 && proc.cycles == 0 && proc.maxQuantum == 0 && proc.timeStamp == 0 
-        && proc.priority == 0 && proc.initType == ""){
-            process.push_back(process_ToRegister);
+bool Cpu::put(Process proc){
+    for(int i=0; i < coreQT;i++){
+        if(process[i].id == 0){
+            process[i] = proc;
+            return true;
         }
     }
- 
+    return false;
 }
+bool Cpu::del(Process proc){
+    for(int i=0; i < coreQT ;i++){
+        if(process[i].id == proc.id){
+            process[i] = Process(0, 0, 0, 0, 0, "");
+            return true;
+        }
+    }
+    return false;
+}
+
 void Cpu::showInfo(){
 
     int used = 0;

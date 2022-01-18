@@ -2,6 +2,7 @@
 #define _SHELL_HPP
 
 #include "../kernel/kernel.hpp"
+#include "../kernel/scheduler/scheduler.hpp"
 #include "../components/headers/file.hpp"
 #include <iostream>
 #include <unistd.h>
@@ -16,16 +17,18 @@ class Shell
         string userName;
         string directory;
         Kernel* kernel;
+        Scheduler* scheduler;
         Json helps;
 
     public:
-        Shell(Kernel* kernel);
+        Shell(Kernel* kernel, Scheduler* scheduler);
         
         string getUserName();
 
         void openShell();
         void showHelp();
         void loadHelps();
+        void htop();
 };
 
 

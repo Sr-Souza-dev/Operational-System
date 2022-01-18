@@ -3,9 +3,10 @@
 //-----------------------------CONSTRUCTORs------------------------------------
 Scheduler::Scheduler(Kernel *kernel){
     this->kernel = kernel;
+}
 
-
-
+void Scheduler::load(){
+   
     FileJson processFile = FileJson("config/process.json");
     Json process = processFile.getJsonFile();
     //int id, int cycles, int maxQuantum, int timeStamp, int priority, string initType,
@@ -24,18 +25,24 @@ Scheduler::Scheduler(Kernel *kernel){
         catch(const std::exception& e){
             std::cerr << e.what() << '\n';
         }        
-    }
+    }   
+    init();
 }
-
 //-----------------------------FUNCTIONs------------------------------------
 void Scheduler::init(){
     while(!processReady.empty() || !processBlocked.empty()){
+        //system("clear||cls");
+        //showProcess();
+        //kernel->disc->showInfo();
+        //kernel->memory->showInfo();
+        //kernel->cpu->showInfo();
+        // system("clear||cls");
+        // kernel->memory->showInfo();
         policy("fifo");
         submission();
         luckType();
-        usleep(1000000 * 0.5);
-        showProcess();
     }
+    showProcess();
 }
 
 
@@ -50,83 +57,110 @@ void Scheduler::policy(string type){
 
 //Processos de submissão 
 void Scheduler::submission(){
-    for (long unsigned int i=0; i<processReady.size(); i++)
-    {
-        if(processReady[i].initType=="cpu-bound"){
-            cpuBound(i);
-        }else if(processReady[i].initType=="io-bound"){
-            i = i - ioBound(i);
-        }else if(processReady[i].initType=="memory-bound"){
-            i = i - memoryBound(i);
+    while (!processReady.empty())
+    {  
+       
+        if(processReady.front().initType=="cpu-bound"){
+            cpuBound(processReady.front());
+            processReady.erase(processReady.begin());
+
+        }else if(processReady.front().initType=="io-bound"){
+            ioBound(processReady.front());
+            processReady.erase(processReady.begin());
+
+        }else if(processReady.front().initType=="memory-bound"){
+            memoryBound(processReady.front());
+            processReady.erase(processReady.begin());
         }
     }
-}
-
-void Scheduler::cpuBound(int index){
-    Process process_aux = processReady[index];
-    kernel->cpu->processRegister(process_aux);
-    decrementQuantum(index);
-    //TODO IMPLEMENTAR A REMOÇÃO DE PROCESSOS DA CPU
-}
-
-int Scheduler::memoryBound(int index){
-    if(processReady[index].associated == true){
-        decrementQuantum(index);
-        return 0;
-    } else{
-        blockedInsert(index);
-        return 1;
+    if(processReady.empty() && !processBlocked.empty()){
+        increment();
+        blockedUpdate();
     }
 }
 
-int Scheduler::ioBound(int index){
-    if(processReady[index].associated == true){
-        decrementQuantum(index);
-        return 0;
+void Scheduler::cpuBound(Process process){
+    kernel->cpu->put(process);
+    decrementQuantum(process);
+}
+
+void Scheduler::memoryBound(Process process){
+    if(process.associated == true){
+        decrementQuantum(process);
     } else{
-        blockedInsert(index);
-        return 1;
+        blockedInsert(process);
     }
 }
 
-void Scheduler::decrementQuantum(int index){
-    int quantum = luckNumber(processReady[index].maxQuantum);
+void Scheduler::ioBound(Process process){
+    if(process.associated == true){
+        decrementQuantum(process);
+    } else{
+        blockedInsert(process);
+    }
+}
+
+void Scheduler::decrementQuantum(Process process){
+
+    int quantum = luckNumber(process.maxQuantum);
+
     for(int i=0; i < quantum; i++){
-        if(processReady[index].currentQuantum <= 0){
-            if(processReady[index].initType=="memory-bound"){
-                if(!kernel->memory->del(processReady[index])){
-                    cout<< "[ERRO] - A remoção do processo ("<<processReady[index].id<<") na memória falhou"<<endl;
+
+        process.currentQuantum--;
+        process.timeStamp++;
+
+        increment();
+        blockedUpdate();
+
+        if(process.currentQuantum <= 0){
+            if(process.initType=="memory-bound"){
+                if(!kernel->memory->del(process)){
+                    cout<< "[ERRO] - A remoção do processo ("<<process.id<<") na memória falhou"<<endl;
                 }
-            }else if(processReady[index].initType=="io-bound"){
-                //TODO IMPLEMENTAR A REMOÇÃO DE ITENS DO DISCO
-            }
+            }else if(process.initType=="io-bound"){
+                
+                if(!kernel->disc->del(to_string(process.id))){
+                    cout<< "[ERRO] - A remoção do processo ("<<process.id<<") no disco falhou"<<endl;
+                }
+            } 
             break;
         }
-        processReady[index].currentQuantum--;
-        blockedUpdate();
-        usleep(1000000 * 0.5);
     }
+
+    usleep(1000000 * sleepTime);   
+
+    if(process.initType=="cpu-bound"){
+        if(!kernel->cpu->del(process)){
+            cout<< "[ERRO] - A remoção do processo ("<<process.id<<") na cpu falhou"<<endl;
+        }
+    }
+    processes.push_back(process);  
 }
 
-void Scheduler::blockedInsert(int index){
-    processReady[index].penalty = luckNumber(4);
-    processBlocked.push_back(processReady[index]);
-    processReady.erase(processReady.begin()+index);
+Data Scheduler::createData(Process process){
+    return Data(
+        to_string(process.id), 
+        "."+process.initType.substr(0,4), 
+        to_string(process.maxQuantum*process.cycles)
+    );
+}
+
+void Scheduler::blockedInsert(Process process){
+    process.penalty = luckNumber(4);
+    processBlocked.push_back(process);
 }
 
 void Scheduler::blockedUpdate(){
     for (long unsigned int i=0; i<processBlocked.size(); i++){
         processBlocked[i].penalty--;
         if(processBlocked[i].penalty <= 0){
-            processReady.push_back(processBlocked[i]);
             if(processBlocked[i].initType=="memory-bound"){
-                if(kernel->memory->put(processBlocked[i])){
-                    processBlocked[i].associated = true;
-                } else processBlocked[i].associated = false;
+                processBlocked[i].associated = kernel->memory->put(processBlocked[i]);
                 
             } else if(processReady[i].initType=="io-bound"){
-                //TODO IMPLEMENTAR A INSERÇÃO DE ITENS NO DISCO
+                processBlocked[i].associated = kernel->disc->put(createData(processBlocked[i]));
             }
+            processes.push_back(processBlocked[i]);
             processBlocked.erase(processBlocked.begin()+i);
             i--;
         }
@@ -139,23 +173,34 @@ int Scheduler::luckNumber(int maxValue){
 }
 
 void Scheduler::luckType(){
-    int var = rand()%(3) + 1;
-    for (long unsigned int i=0; i<processReady.size(); i++)
+    int var;
+    while (!processes.empty())
     {
-       if(processReady[i].currentQuantum <= 0){
-            var = rand()%(3) + 1;
-            if(var == 1){
-                processReady[i].initType = "cpu-bound";
-            }else if(var == 2){
-                processReady[i].initType = "io-bound";
-            }else if(var == 3){
-                processReady[i].initType = "memory-bound";
-            } else{
-                processReady[i].initType = var%2 == 0 ? "cpu-bound" : "io-bound";
+        if(processes.front().currentQuantum <= 0){
+            var = luckNumber(3);
+
+            processes.front().cycles--;
+            processes.front().associated = false;
+            processes.front().currentQuantum = processes.front().maxQuantum;
+
+            if(processes.front().cycles <= 0){
+                processFinish.push_back(processes.front());
             }
-            processReady[i].cycles--;
-            processReady[i].currentQuantum = processReady[i].maxQuantum;
-       }
+
+            if(var == 1){
+                processes.front().initType = "cpu-bound";
+
+            }else if(var == 2){
+                processes.front().initType = "io-bound";
+
+            }else if(var == 3){
+                processes.front().initType = "memory-bound";
+            } else printf("[ERRO] - tipo não definido para o valor sorteado");
+        }
+        if(processes.front().cycles > 0){
+            processReady.push_back(processes.front());
+        }  
+        processes.erase(processes.begin());
     }
 }
 
@@ -166,12 +211,16 @@ void Scheduler::increment(){
     for(long unsigned int i=0; i<processBlocked.size(); i++){
         processBlocked[i].timeStamp++;
     }
+    for(long unsigned int i=0; i<processes.size(); i++){
+        processes[i].timeStamp++;
+    }
 }
 
 
 
 //Imprime os processos bloqueados e prontos
 void Scheduler::showProcess(){
+    cout<<"\n\n";
     if(!processReady.empty()){
         cout<<"********************************** Lista de Processos - (Status: Pronto) *******************************"<<endl;
         Process().printHead();
@@ -180,6 +229,9 @@ void Scheduler::showProcess(){
             processReady[i].print();
         }
         Process().printFooter();
+        if(!processBlocked.empty()){
+            cout<<"////////////////////////////////////////////////////////////////////////////////////////////////////////"<<endl;
+        }
     }
     if(!processBlocked.empty()){
         cout<<"******************************** Lista de Processos - (Status: Bloqueado) ******************************"<<endl;
@@ -189,7 +241,20 @@ void Scheduler::showProcess(){
             processBlocked[i].print();
         }
         Process().printFooter();
+        if(!processFinish.empty()){
+            cout<<"////////////////////////////////////////////////////////////////////////////////////////////////////////"<<endl;
+        }
     }
+    if(!processFinish.empty()){
+        cout<<"******************************* Lista de Processos - (Status: Finalizados) *****************************"<<endl;
+        Process().printHead();
+        for (long unsigned int i = 0; i < processFinish.size(); i++)
+        {
+            processFinish[i].print();
+        }
+        Process().printFooter();
+    }
+    cout<<"\n\n";
 }
 
 void Scheduler::makeHistoric()

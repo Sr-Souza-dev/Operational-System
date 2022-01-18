@@ -1,10 +1,21 @@
 #include "headers/data.hpp"
 
-Data::Data(string name, string type, string size, string createDate){
+Data::Data(string name, string type, string size){
     this->name = name;
     this->type = type;
     this->size = size;
-    this->createDate = createDate;
+    
+    time_t mytime;
+    mytime = time(NULL);
+    struct tm tm = *localtime(&mytime);
+
+    string realDate = to_string(tm.tm_mday) + "/" 
+                + to_string(tm.tm_mon+1) + "/" 
+                + to_string(tm.tm_year + 1900) + " - "
+                + to_string(tm.tm_hour) + ":"
+                + to_string(tm.tm_min);
+
+    this->createDate = realDate;
 }
 
 

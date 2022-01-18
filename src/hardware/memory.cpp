@@ -31,6 +31,7 @@ void Memory::showInfo(){
 bool Memory::put(Process process){
     for(long unsigned int i=0; i<memory.size() ;i++){
         if(memory[i].id == 0){
+            process.core = i;
             memory[i] = process;
             return true;
         }
@@ -40,7 +41,7 @@ bool Memory::put(Process process){
 bool Memory::del(Process process){
     for(long unsigned int i=0; i<memory.size() ;i++){
         if(memory[i].id == process.id){
-            memory.erase(memory.begin()+i);
+            memory[i] = Process(0, 0, 0, 0, 0, "");
             return true;
         }
     }

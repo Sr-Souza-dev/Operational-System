@@ -13,6 +13,14 @@
             "description" : "Exibe de forma detalhada informações de armazenamento do disco"
         },
         {
+            "command" : "htop",
+            "description" : "Imprime informações em tempo real"
+        },
+        {
+            "command" : "loadProcess",
+            "description" : "Carrega os processos do json para o simulador"
+        },
+        {
             "command" : "help",
             "description" : "Imprime opçẽs de comandos para o diretório atual"
         },
