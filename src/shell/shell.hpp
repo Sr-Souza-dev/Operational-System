@@ -13,20 +13,17 @@ using namespace std;
 
 class Shell
 {
-    private:
+    public:
         string userName;
         string directory;
         Kernel* kernel;
         Scheduler* scheduler;
         Json helps;
-
-    public:
         Shell(Kernel* kernel, Scheduler* scheduler);
         
         string getUserName();
 
         void openShell();
-        void rebaseShell();
         void showHelp();
         void loadHelps();
         void htop();

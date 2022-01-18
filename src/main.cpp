@@ -7,9 +7,7 @@
 void initScheduler(Scheduler *scheduler){
     scheduler->init();
 }
-void openShell(Shell *shell){
-    shell->openShell();
-}
+
 int main(){
     //Define o kernel de acordo com as conf Iniciais 
     Kernel kernel = Kernel();
