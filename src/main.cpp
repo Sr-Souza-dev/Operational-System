@@ -2,7 +2,6 @@
 #include "components/headers/file.hpp"
 #include "kernel/kernel.hpp"
 #include "shell/shell.hpp"
-#include <thread>
 
 
 void initScheduler(Scheduler *scheduler){
@@ -21,20 +20,7 @@ int main(){
     //Define e inicializa as diretrizes do shell
     Shell shell = Shell(&kernel, &scheduler);
     
-    //threads
-    thread t_shell(openShell,&shell);
-    //thread t_init(initScheduler, &scheduler);
-    
-
-
-    //t_init.join();
-    //scheduler.init();
-
-    //scheduler.showProcess();
-    
-
-    t_shell.join();
-    //shell.openShell();
+    shell.openShell();
 
     scheduler.makeHistoric();
 

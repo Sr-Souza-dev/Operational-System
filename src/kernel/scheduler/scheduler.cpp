@@ -42,7 +42,6 @@ void Scheduler::init(){
         submission();
         luckType();
     }
-    showProcess();
 }
 
 
@@ -189,12 +188,15 @@ void Scheduler::luckType(){
 
             if(var == 1){
                 processes.front().initType = "cpu-bound";
+                processes.front().historic.push_back(1);
 
             }else if(var == 2){
                 processes.front().initType = "io-bound";
+                processes.front().historic.push_back(2);
 
             }else if(var == 3){
                 processes.front().initType = "memory-bound";
+                processes.front().historic.push_back(3);
             } else printf("[ERRO] - tipo não definido para o valor sorteado");
         }
         if(processes.front().cycles > 0){
@@ -266,6 +268,7 @@ void Scheduler::makeHistoric()
         aux["ciclos"] = processFinish[i].cycles;
         aux["timestamp"] = processFinish[i].timeStamp;
         aux["prioridade"] = processFinish[i].priority;
+        aux["historico"] = processFinish[i].historic;
 
         principal.push_back(aux);
     }

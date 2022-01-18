@@ -26,6 +26,7 @@ class Shell
         string getUserName();
 
         void openShell();
+        void rebaseShell();
         void showHelp();
         void loadHelps();
         void htop();

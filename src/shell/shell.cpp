@@ -31,6 +31,12 @@ void Shell::loadHelps(){
     this -> helps = help.getJsonFile();
 }
 
+void initSchedule(Scheduler *scheduler){
+    scheduler->load();
+}
+void newShell(void *func){
+    *func();
+}
 
 //Abre o shell para receber comandos
 void Shell::openShell(){
@@ -46,8 +52,11 @@ void Shell::openShell(){
         else if(cmd == ((string)helps["help"][2]["command"]))   {kernel->disc->showInfo();}
         else if(cmd == ((string)helps["help"][3]["command"]))   {htop();}
         else if(cmd == ((string)helps["help"][4]["command"]))   {
-            
-            scheduler->load();
+            thread t_init(initSchedule, scheduler);
+            t_init.join();
+
+            thread t_rebase(newShell, &rebaseShell);
+            t_rebase.join();
         }
         else if(cmd == ((string)helps["help"][5]["command"]))   {showHelp();}
         else if(cmd == ((string)helps["help"][6]["command"]))   {}
@@ -55,6 +64,24 @@ void Shell::openShell(){
             cout<<"  Comando inválido (<help> para mais informações!)"<<endl;
         }
 
+    } while (cmd != "exit");
+}
+
+void Shell::rebaseShell(){
+    string cmd;
+    do{
+        cout<<this->userName<<":~/"<<directory<<": ";
+        getline(cin,cmd);
+
+        if(     cmd == ((string)helps["help"][0]["command"]))   {kernel->cpu->showInfo();}
+        else if(cmd == ((string)helps["help"][1]["command"]))   {kernel->memory->showInfo();}
+        else if(cmd == ((string)helps["help"][2]["command"]))   {kernel->disc->showInfo();}
+        else if(cmd == ((string)helps["help"][3]["command"]))   {htop();}
+        else if(cmd == ((string)helps["help"][5]["command"]))   {showHelp();}
+        else if(cmd == ((string)helps["help"][6]["command"]))   {}
+        else{
+            cout<<"  Comando inválido (<help> para mais informações!)"<<endl;
+        }
     } while (cmd != "exit");
 }
 

@@ -2,6 +2,7 @@
 #define _PROCESS_HPP
 #include <iostream>
 #include <string.h>
+#include <vector>
 
 using namespace std;
 
@@ -19,6 +20,7 @@ class Process{
         bool associated;    // False - processos não associados a uma memoria/disco | true - processos associados a uma memoria/disco
         int currentQuantum; // Valor de quantum atual do processo durante o ciclo
         string initType;    // Tipo de recurso que o processo mais utiliza
+        vector<int> historic;
 
     //Constructors
     Process(){}
