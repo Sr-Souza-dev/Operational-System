@@ -54,7 +54,7 @@ Permite a saída do programa.
 # Comandos adicionados após primeira entrega:
 ## htop
 
-Permite verificarmos informações gerais dos processos em execução, como timeStamp, ciclos atuais que restam de execução, a prioridade e seu tipo (io-bound, memory-bound, ou cpu-bound), além, do ID do processo.
+Permite verificarmos informações gerais dos processos em execução, como timeStamp, ciclos atuais que restam de execução, a prioridade e seu tipo (io-bound, memory-bound, ou cpu-bound), além do ID do processo.
 
 ![git3](https://user-images.githubusercontent.com/56899474/150046596-d5ada130-6250-40a5-8d29-aa6c3fed51c7.png)
 
