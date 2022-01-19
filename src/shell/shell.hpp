@@ -6,6 +6,9 @@
 #include "../components/headers/file.hpp"
 #include <iostream>
 #include <unistd.h>
+#include <termios.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <thread>
 using namespace std;
 #define userNameLenght 20
@@ -27,6 +30,8 @@ class Shell
         void showHelp();
         void loadHelps();
         void htop();
+        int kbhit(void);
+        void pressAnyKey(int aux);
 };
 
 

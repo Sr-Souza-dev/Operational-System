@@ -9,7 +9,6 @@ void Scheduler::load(){
    
     FileJson processFile = FileJson("config/process.json");
     Json process = processFile.getJsonFile();
-    //int id, int cycles, int maxQuantum, int timeStamp, int priority, string initType,
     for(long unsigned int i=0; i<process.size(); i++){
         try{
             processReady.push_back(
@@ -31,16 +30,10 @@ void Scheduler::load(){
 //-----------------------------FUNCTIONs------------------------------------
 void Scheduler::init(){
     while(!processReady.empty() || !processBlocked.empty()){
-        //system("clear||cls");
-        //showProcess();
-        //kernel->disc->showInfo();
-        //kernel->memory->showInfo();
-        //kernel->cpu->showInfo();
-        // system("clear||cls");
-        // kernel->memory->showInfo();
         policy("fifo");
         submission();
         luckType();
+        usleep(1000000 * sleepTime);
     }
 }
 
@@ -49,7 +42,6 @@ void Scheduler::init(){
 void Scheduler::policy(string type){
     if(type == "fifo"){
         // A ideia de FIFO já é implementada como forma padrão do escalonador 
-        
     }
 }
 
@@ -126,14 +118,12 @@ void Scheduler::decrementQuantum(Process process){
         }
     }
 
-    usleep(1000000 * sleepTime);   
-
     if(process.initType=="cpu-bound"){
         if(!kernel->cpu->del(process)){
             cout<< "[ERRO] - A remoção do processo ("<<process.id<<") na cpu falhou"<<endl;
         }
     }
-    processes.push_back(process);  
+    processes.push_back(process);     
 }
 
 Data Scheduler::createData(Process process){
@@ -219,7 +209,6 @@ void Scheduler::increment(){
 }
 
 
-
 //Imprime os processos bloqueados e prontos
 void Scheduler::showProcess(){
     cout<<"\n\n";
@@ -231,7 +220,7 @@ void Scheduler::showProcess(){
             processReady[i].print();
         }
         Process().printFooter();
-        if(!processBlocked.empty()){
+        if(!processBlocked.empty() || !processFinish.empty()){
             cout<<"////////////////////////////////////////////////////////////////////////////////////////////////////////"<<endl;
         }
     }
@@ -255,6 +244,9 @@ void Scheduler::showProcess(){
             processFinish[i].print();
         }
         Process().printFooter();
+    }
+    if(processFinish.empty() && processBlocked.empty() && processReady.empty()){
+        cout<<"   Não há processos em execução"<<endl;
     }
     cout<<"\n\n";
 }

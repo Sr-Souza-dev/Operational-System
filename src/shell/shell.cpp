@@ -25,6 +25,33 @@ string Shell::getUserName(){
     }
 }
 
+int Shell::kbhit(void)
+{
+  struct termios oldt, newt;
+  int ch;
+  int oldf;
+
+  tcgetattr(STDIN_FILENO, &oldt);
+  newt = oldt;
+  newt.c_lflag &= ~(ICANON | ECHO);
+  tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+  oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
+  fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK);
+
+  ch = getchar();
+
+  tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+  fcntl(STDIN_FILENO, F_SETFL, oldf);
+
+  if(ch != EOF)
+  {
+    ungetc(ch, stdin);
+    return 1;
+  }
+
+  return 0;
+}
+
 // Recupera lista de comando help
 void Shell::loadHelps(){
     FileJson help = FileJson("config/helps.json");
@@ -44,10 +71,10 @@ void Shell::openShell(){
         cout<<this->userName<<":~/"<<directory<<": ";
         getline(cin,cmd);
 
-        if(     cmd == ((string)helps["help"][0]["command"]))   {kernel->cpu->showInfo();}
-        else if(cmd == ((string)helps["help"][1]["command"]))   {kernel->memory->showInfo();}
-        else if(cmd == ((string)helps["help"][2]["command"]))   {kernel->disc->showInfo();}
-        else if(cmd == ((string)helps["help"][3]["command"]))   {htop();}
+        if(     cmd == ((string)helps["help"][0]["command"]))   {pressAnyKey(0);}
+        else if(cmd == ((string)helps["help"][1]["command"]))   {pressAnyKey(1);}
+        else if(cmd == ((string)helps["help"][2]["command"]))   {pressAnyKey(2);}
+        else if(cmd == ((string)helps["help"][3]["command"]))   {pressAnyKey(3);} //htop
         else if(cmd == ((string)helps["help"][4]["command"]))   {
             
 
@@ -63,9 +90,29 @@ void Shell::openShell(){
     } while (cmd != "exit");
 }
 
-
-// system("clear||cls");
-//     kernel->cpu->showInfo();
+void Shell::pressAnyKey(int aux){
+    while(!kbhit()){
+        usleep(1000000 * sleepTime * 0.5);
+        system("clt||clear");
+        cout<<"  ************ Pressione Qualquer Tecla para sair do modo de visualização! ************ "<<endl;
+        switch(aux){
+            case 0:
+                kernel->cpu->showInfo();
+            break;
+            case 1:
+                kernel->memory->showInfo();
+            break;
+            case 2:
+                kernel->disc->showInfo();
+            break;
+            case 3:
+                scheduler->showProcess();  
+            break;
+        }
+        cout<<"  ************ Pressione Qualquer Tecla para sair do modo de visualização! ************ "<<endl;
+    }
+    getchar();
+}
 
 //Exibe um menu de informações com todos comandos possíveis
 void Shell::showHelp(){
@@ -80,7 +127,4 @@ void Shell::showHelp(){
     }
     cout<<endl;    
 }
-
-void Shell::htop(){
-    scheduler->showProcess();
-}
+    
