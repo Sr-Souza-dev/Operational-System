@@ -65,6 +65,8 @@ void initSchedule(Scheduler *scheduler){
 //Abre o shell para receber comandos
 void Shell::openShell(){
     
+    bool loadProcessExecuted = false;
+
     showHelp();
     string cmd;
     do{
@@ -75,11 +77,14 @@ void Shell::openShell(){
         else if(cmd == ((string)helps["help"][1]["command"]))   {pressAnyKey(1);}
         else if(cmd == ((string)helps["help"][2]["command"]))   {pressAnyKey(2);}
         else if(cmd == ((string)helps["help"][3]["command"]))   {pressAnyKey(3);} //htop
-        else if(cmd == ((string)helps["help"][4]["command"]))   {
-            
-
-            thread t_init(initSchedule, scheduler);
-            t_init.detach();
+        else if(cmd == ((string)helps["help"][4]["command"]))   {            
+            if(!loadProcessExecuted){
+                loadProcessExecuted = true;
+                thread t_init(initSchedule, scheduler);
+                t_init.detach();
+            } else{
+                cerr << "[ERRO] - Os processos já foram carregados!" << endl;
+            }
         }
         else if(cmd == ((string)helps["help"][5]["command"]))   {showHelp();}
         else if(cmd == ((string)helps["help"][6]["command"]))   {}
