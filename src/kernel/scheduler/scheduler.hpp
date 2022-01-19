@@ -32,15 +32,15 @@ class Scheduler{
         void policy(string type);               // Aplica uma politica de ordenação do vetor processReady
 
         void submission();                      // Encaminha os processos para as devidas estruturas físicas
-        void cpuBound(Process process);               // Trata processos que gastam muito hardware de processador
-        void ioBound(Process process);                 // Trata processos que gastam muito hardware de disco
-        void memoryBound(Process process);             // Trata processos que gastam muito hardware de memoria primaria
+        void cpuBound(Process process);         // Trata processos que gastam muito hardware de processador
+        void ioBound(Process process);          // Trata processos que gastam muito hardware de disco
+        void memoryBound(Process process);      // Trata processos que gastam muito hardware de memoria primaria
         void increment();                       // Incremento nos timeStamp
         int luckNumber(int maxValue);           // Sorteia um valor de 1 - maxValue
         void luckType();                        // Sortei os novos custos para cada processo
-        void decrementQuantum(Process process);       // Reduz o quantum implementando todos decrescimos de tempo
+        void decrementQuantum(Process process); // Reduz o quantum implementando todos decrescimos de tempo
         void blockedUpdate();                   // Atualiza o vetor de processos bloqueados
-        void blockedInsert(Process process);          // Insere um processo no vetor de bloqueados
+        void blockedInsert(Process process);    // Insere um processo no vetor de bloqueados
         Data createData(Process process);
 
         void showProcess();                     // Visualiza Informações das listas de processos Bloqueados e Prontos

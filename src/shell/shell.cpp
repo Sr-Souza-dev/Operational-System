@@ -92,7 +92,7 @@ void Shell::openShell(){
 
 void Shell::pressAnyKey(int aux){
     while(!kbhit()){
-        usleep(1000000 * sleepTime * 0.5);
+        usleep(1000000 * sleepTime * 0.1);
         system("clt||clear");
         cout<<"  ************ Pressione Qualquer Tecla para sair do modo de visualização! ************ "<<endl;
         switch(aux){
@@ -109,7 +109,7 @@ void Shell::pressAnyKey(int aux){
                 scheduler->showProcess();  
             break;
         }
-        cout<<"  ************ Pressione Qualquer Tecla para sair do modo de visualização! ************ "<<endl;
+        cout<<"\n  ************ Pressione Qualquer Tecla para sair do modo de visualização! ************ "<<endl;
     }
     getchar();
 }

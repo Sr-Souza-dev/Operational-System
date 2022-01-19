@@ -33,7 +33,7 @@ void Scheduler::init(){
         policy("fifo");
         submission();
         luckType();
-        usleep(1000000 * sleepTime);
+        //usleep(1000000 * sleepTime);
     }
 }
 
@@ -100,6 +100,8 @@ void Scheduler::decrementQuantum(Process process){
         process.currentQuantum--;
         process.timeStamp++;
 
+        usleep(1000000 * sleepTime * 0.5); 
+
         increment();
         blockedUpdate();
 
@@ -123,7 +125,7 @@ void Scheduler::decrementQuantum(Process process){
             cout<< "[ERRO] - A remoção do processo ("<<process.id<<") na cpu falhou"<<endl;
         }
     }
-    processes.push_back(process);     
+    processes.push_back(process);    
 }
 
 Data Scheduler::createData(Process process){
