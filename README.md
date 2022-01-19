@@ -56,7 +56,7 @@ Permite a saída do programa.
 
 Permite verificarmos informações gerais dos processos em execução, como timeStamp, ciclos atuais que restam de execução, a prioridade e seu tipo (io-bound, memory-bound, ou cpu-bound), além, do ID do processo.
 
-![git1](https://user-images.githubusercontent.com/56899474/150044776-cc4c442c-8bb0-4c16-b78f-4a9fda7ecac8.png)
+![git3](https://user-images.githubusercontent.com/56899474/150046596-d5ada130-6250-40a5-8d29-aa6c3fed51c7.png)
 
 
 ## loadProcess
