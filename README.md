@@ -51,6 +51,23 @@ Permite a saída do programa.
 
 -------------------------------------------------------------------------------------------
 
+# Comandos adicionados após primeira entrega:
+## htop
+
+Permite verificarmos informações gerais dos processos em execução, como timeStamp, ciclos atuais que restam de execução, a prioridade e seu tipo (io-bound, memory-bound, ou cpu-bound), além, do ID do processo.
+
+![git1](https://user-images.githubusercontent.com/56899474/150044776-cc4c442c-8bb0-4c16-b78f-4a9fda7ecac8.png)
+
+
+## loadProcess
+
+Este comando carrega os processos a partir de um .json para serem executados.
+
+
+## Como seria possível melhorar tempo de execução dos processos?
+
+A partir da análise do histórico gerado, que inclui o timeStamp de cada processo, percebemos que uma otimização poderia ser feita a partir de outro tipo de abordagem com as threads, já que, uma vez que permitissemos que cada tipo de processo executasse em uma thread diferente, teríamos, através de concorrência, uma execução mais eficaz.
+
 
 
 
