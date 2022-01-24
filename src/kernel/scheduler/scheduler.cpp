@@ -310,7 +310,7 @@ void Scheduler::makeHistoric()
         principal.push_back(aux);
     }
     
-      std::ofstream o("historic.json");
+      std::ofstream o("config/historic.json");
       o<<std::setw(4)<< principal <<endl;
 }
 
