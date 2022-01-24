@@ -29,8 +29,8 @@ void Scheduler::load(){
 }
 //-----------------------------FUNCTIONs------------------------------------
 void Scheduler::init(){
-    while(!processReady.empty() || !processBlocked.empty()){
-        policy("fifo");
+    while(!processReady.empty() || !processBlocked.empty() || !processesAux.empty()){
+        policy("multipleQueues");
         submission();
         luckType();
         //usleep(1000000 * sleepTime);
@@ -42,7 +42,50 @@ void Scheduler::init(){
 void Scheduler::policy(string type){
     if(type == "fifo"){
         // A ideia de FIFO já é implementada como forma padrão do escalonador 
+    } else if(type == "lru"){
+        LRU();
+    } else if(type == "multipleQueues"){
+        multipleQueues();
     }
+}
+
+bool sortFunctionGrowing(Process i, Process j){return(i.cycles < j.cycles);}
+void Scheduler::LRU(){
+    sort(processReady.begin(), processReady.end(), sortFunctionGrowing);
+}
+
+bool sortFunctionDescending(Process i, Process j){return(i.timeStamp < j.timeStamp);}
+void Scheduler::multipleQueues(){
+    int maxPriority = processReady.front().priority;
+
+    while(!processReady.empty()){
+        if(maxPriority < processReady.front().priority){
+            maxPriority = processReady.front().priority;
+        }
+        processesAux.push_back(processReady.front());
+        processReady.erase(processReady.begin());
+    }
+
+    if(processReady.empty()){
+        maxPriority = processesAux.front().priority;
+        for(Process aux:processesAux){
+            if(maxPriority < aux.priority){
+                maxPriority = aux.priority;
+            }
+        }
+    }
+
+    long unsigned int cont = 0;
+    while(cont < processesAux.size()){
+        if(processesAux[cont].priority == maxPriority){
+            processReady.push_back(processesAux[cont]);
+            processesAux.erase(processesAux.begin() + cont);
+        } else{
+            cont++;
+        }
+    }
+
+    sort(processReady.begin(), processReady.end(), sortFunctionDescending);
 }
 
 

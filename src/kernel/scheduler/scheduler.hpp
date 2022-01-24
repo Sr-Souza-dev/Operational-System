@@ -22,6 +22,7 @@ class Scheduler{
         vector<Process> processReady;           // Vetor de processos prontos para serem executados
         vector<Process> processBlocked;         // Vetor de processos que estão aguardando recursos
         vector<Process> processFinish;          // Vetor de processos finalizados 
+        vector<Process> processesAux; 
         Kernel *kernel;                         // Hardware virtual simulado
 
         //Constructor
@@ -41,8 +42,10 @@ class Scheduler{
         void decrementQuantum(Process process); // Reduz o quantum implementando todos decrescimos de tempo
         void blockedUpdate();                   // Atualiza o vetor de processos bloqueados
         void blockedInsert(Process process);    // Insere um processo no vetor de bloqueados
-        Data createData(Process process);
-
+        Data createData(Process process);       // Cria um tipo Data a partir de um processo
+        void LRU();
+        void multipleQueues();
+        
         void showProcess();                     // Visualiza Informações das listas de processos Bloqueados e Prontos
         void makeHistoric();                    // Emite um histórico dos processos ao longo da execução
         void load();                            // Recebe os processos do arquivo json e carrega os mesmos para lista de pronto

@@ -2,271 +2,71 @@
     {
         "ciclos": 0,
         "historico": [
-            2
-        ],
-        "prioridade": 2,
-        "processo": 6,
-        "timestamp": 41
-    },
-    {
-        "ciclos": 0,
-        "historico": [
             3,
-            1
-        ],
-        "prioridade": 2,
-        "processo": 15,
-        "timestamp": 54
-    },
-    {
-        "ciclos": 0,
-        "historico": [
             1,
+            3,
+            3,
             1,
+            3,
+            2,
+            3,
             3
         ],
-        "prioridade": 2,
-        "processo": 2,
-        "timestamp": 54
+        "prioridade": 4,
+        "processo": 9,
+        "timestamp": 71
+    },
+    {
+        "ciclos": 0,
+        "historico": [
+            2,
+            3,
+            3,
+            2,
+            1,
+            1,
+            3,
+            1,
+            1
+        ],
+        "prioridade": 4,
+        "processo": 1,
+        "timestamp": 84
     },
     {
         "ciclos": 0,
         "historico": [
             3,
-            1,
             3,
+            2,
             2
         ],
         "prioridade": 3,
         "processo": 7,
-        "timestamp": 190
-    },
-    {
-        "ciclos": 0,
-        "historico": [
-            3,
-            1,
-            3,
-            2,
-            3,
-            3,
-            3,
-            1
-        ],
-        "prioridade": 1,
-        "processo": 14,
-        "timestamp": 214
+        "timestamp": 53
     },
     {
         "ciclos": 0,
         "historico": [
             2,
-            1,
-            2,
             3,
-            3,
-            3,
-            1,
-            1,
-            3
-        ],
-        "prioridade": 4,
-        "processo": 1,
-        "timestamp": 214
-    },
-    {
-        "ciclos": 0,
-        "historico": [
-            1,
-            1,
-            2,
-            1,
-            1,
-            3,
-            3,
-            3,
-            1
-        ],
-        "prioridade": 4,
-        "processo": 9,
-        "timestamp": 218
-    },
-    {
-        "ciclos": 0,
-        "historico": [
-            3,
-            3,
-            1,
-            2,
-            1,
-            2,
-            2
-        ],
-        "prioridade": 0,
-        "processo": 3,
-        "timestamp": 261
-    },
-    {
-        "ciclos": 0,
-        "historico": [
-            3,
-            2,
-            2,
-            2,
-            1,
-            3,
-            3,
-            2,
-            1,
-            3
-        ],
-        "prioridade": 2,
-        "processo": 12,
-        "timestamp": 291
-    },
-    {
-        "ciclos": 0,
-        "historico": [
-            3,
-            1,
-            1,
-            2,
-            1,
-            2,
             1,
             2,
             3,
             3,
             2,
-            1
-        ],
-        "prioridade": 1,
-        "processo": 4,
-        "timestamp": 320
-    },
-    {
-        "ciclos": 0,
-        "historico": [
-            2,
-            2,
-            2,
-            2,
-            3,
             2,
             3,
             3,
-            3,
-            1,
-            1,
-            1,
-            3
-        ],
-        "prioridade": 3,
-        "processo": 10,
-        "timestamp": 354
-    },
-    {
-        "ciclos": 0,
-        "historico": [
-            2,
-            1,
-            3,
-            3,
-            2,
-            2,
-            3,
-            2,
             3,
             2,
             1,
             3,
-            1,
-            3,
-            1,
             3,
             2
-        ],
-        "prioridade": 1,
-        "processo": 11,
-        "timestamp": 361
-    },
-    {
-        "ciclos": 0,
-        "historico": [
-            1,
-            3,
-            2,
-            2,
-            1,
-            2,
-            1,
-            2,
-            1,
-            3,
-            3,
-            2,
-            1,
-            1,
-            1,
-            3
         ],
         "prioridade": 4,
         "processo": 8,
-        "timestamp": 378
-    },
-    {
-        "ciclos": 0,
-        "historico": [
-            2,
-            3,
-            3,
-            3,
-            2,
-            1,
-            3,
-            2,
-            1,
-            1,
-            2,
-            3,
-            1,
-            3,
-            1,
-            3,
-            1,
-            2,
-            2,
-            3,
-            1
-        ],
-        "prioridade": 2,
-        "processo": 5,
-        "timestamp": 405
-    },
-    {
-        "ciclos": 0,
-        "historico": [
-            2,
-            2,
-            1,
-            2,
-            1,
-            2,
-            2,
-            2,
-            3,
-            2,
-            3,
-            1,
-            2,
-            2,
-            1,
-            3,
-            3,
-            2
-        ],
-        "prioridade": 3,
-        "processo": 13,
-        "timestamp": 461
+        "timestamp": 227
     }
 ]
