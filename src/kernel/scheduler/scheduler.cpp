@@ -173,7 +173,7 @@ void Scheduler::decrementQuantum(Process process){
         process.currentQuantum--;
         process.timeStamp++;
 
-        //usleep(1000000 * sleepTime * 0.6); 
+        usleep(1000000 * sleepTime * 0.5); 
 
         increment();
         blockedUpdate();
