@@ -6,7 +6,6 @@ Scheduler::Scheduler(Kernel *kernel){
 }
 
 void Scheduler::load(){
-   
     FileJson processFile = FileJson("config/process.json");
     Json process = processFile.getJsonFile();
     for(long unsigned int i=0; i<process.size(); i++){
@@ -30,7 +29,7 @@ void Scheduler::load(){
 //-----------------------------FUNCTIONs------------------------------------
 void Scheduler::init(){
     while(!processReady.empty() || !processBlocked.empty() || !processesAux.empty()){
-        policy("multipleQueues");
+        policy("fifo");
         submission();
         luckType();
         //usleep(1000000 * sleepTime);
@@ -54,46 +53,77 @@ void Scheduler::LRU(){
     sort(processReady.begin(), processReady.end(), sortFunctionGrowing);
 }
 
-bool sortFunctionDescending(Process i, Process j){return(i.timeStamp < j.timeStamp);}
+//bool sortFunctionDescending(Process i, Process j){return(i.timeStamp < j.timeStamp);}
 void Scheduler::multipleQueues(){
-    int maxPriority = processReady.front().priority;
-
-    while(!processReady.empty()){
-        if(maxPriority < processReady.front().priority){
-            maxPriority = processReady.front().priority;
-        }
-        processesAux.push_back(processReady.front());
-        processReady.erase(processReady.begin());
-    }
-
-    if(processReady.empty()){
+    int maxPriority = 0;
+   
+    if(processReady.empty()){       
         maxPriority = processesAux.front().priority;
         for(Process aux:processesAux){
             if(maxPriority < aux.priority){
                 maxPriority = aux.priority;
             }
         }
+    } else{
+        while(!processReady.empty()){
+            if(maxPriority < processReady.front().priority){
+                maxPriority = processReady.front().priority;
+            }
+            processesAux.push_back(processReady.front());
+            processReady.erase(processReady.begin());
+        }
     }
 
+    if(maxPriority > 0){
+        long unsigned int cont = 0;
+        while(cont < processesAux.size()){
+            if(processesAux[cont].priority >= maxPriority){
+                removeProcessTicket(processesAux[cont].id);
+                processReady.push_back(processesAux[cont]);
+                processesAux.erase(processesAux.begin() + cont);
+            } else{
+                tickets.push_back(processesAux[cont].id);
+                cont++;
+            }
+        }
+    } else{
+        int luck = 0;
+        long unsigned int j = 0;
+
+        for(int i = 0; i< kernel->cpu->coreQT; i++){
+            if(this->tickets.size() != 0){
+                luck =  luckNumber(this->tickets.size()) - 1;
+            }
+            
+            j = 0;
+            while(j < processesAux.size()){
+                if(processesAux[j].id == this->tickets[luck]){
+                    removeProcessTicket(processesAux[j].id);
+                    processReady.push_back(processesAux[j]);
+                    processesAux.erase(processesAux.begin() + j);
+                } else{
+                    this->tickets.push_back(processesAux[j].id);
+                    j++;
+                }
+            }
+        }
+    }
+}
+
+void Scheduler::removeProcessTicket(int id){
     long unsigned int cont = 0;
-    while(cont < processesAux.size()){
-        if(processesAux[cont].priority == maxPriority){
-            processReady.push_back(processesAux[cont]);
-            processesAux.erase(processesAux.begin() + cont);
+    while(cont < tickets.size()){
+        if(tickets[cont] == id){
+            tickets.erase(tickets.begin()+cont);
         } else{
             cont++;
         }
     }
-
-    sort(processReady.begin(), processReady.end(), sortFunctionDescending);
 }
-
-
 //Processos de submissão 
 void Scheduler::submission(){
     while (!processReady.empty())
-    {  
-       
+    {   
         if(processReady.front().initType=="cpu-bound"){
             cpuBound(processReady.front());
             processReady.erase(processReady.begin());
@@ -143,7 +173,7 @@ void Scheduler::decrementQuantum(Process process){
         process.currentQuantum--;
         process.timeStamp++;
 
-        usleep(1000000 * sleepTime * 0.5); 
+        //usleep(1000000 * sleepTime * 0.6); 
 
         increment();
         blockedUpdate();
@@ -214,6 +244,9 @@ void Scheduler::luckType(){
             var = luckNumber(3);
 
             processes.front().cycles--;
+            
+            if(processes.front().priority > 0){processes.front().priority--;}
+            
             processes.front().associated = false;
             processes.front().currentQuantum = processes.front().maxQuantum;
 
@@ -250,6 +283,9 @@ void Scheduler::increment(){
     }
     for(long unsigned int i=0; i<processes.size(); i++){
         processes[i].timeStamp++;
+    }
+     for(long unsigned int i=0; i<processesAux.size(); i++){
+        processesAux[i].timeStamp++;
     }
 }
 
@@ -310,11 +346,6 @@ void Scheduler::makeHistoric()
         principal.push_back(aux);
     }
     
-      std::ofstream o("config/historic.json");
-      o<<std::setw(4)<< principal <<endl;
+    std::ofstream o("config/historic.json");
+    o<<std::setw(4)<< principal <<endl;
 }
-
-        
-
-    
-

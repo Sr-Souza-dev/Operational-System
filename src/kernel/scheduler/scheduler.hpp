@@ -23,6 +23,7 @@ class Scheduler{
         vector<Process> processBlocked;         // Vetor de processos que estão aguardando recursos
         vector<Process> processFinish;          // Vetor de processos finalizados 
         vector<Process> processesAux; 
+        vector<int> tickets;
         Kernel *kernel;                         // Hardware virtual simulado
 
         //Constructor
@@ -45,6 +46,7 @@ class Scheduler{
         Data createData(Process process);       // Cria um tipo Data a partir de um processo
         void LRU();
         void multipleQueues();
+        void removeProcessTicket(int id);
         
         void showProcess();                     // Visualiza Informações das listas de processos Bloqueados e Prontos
         void makeHistoric();                    // Emite um histórico dos processos ao longo da execução

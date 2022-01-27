@@ -21,6 +21,7 @@ class Process{
         int currentQuantum; // Valor de quantum atual do processo durante o ciclo
         string initType;    // Tipo de recurso que o processo mais utiliza
         vector<int> historic;
+        
 
     //Constructors
     Process(){}
