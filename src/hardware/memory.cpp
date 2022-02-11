@@ -36,9 +36,9 @@ bool Memory::put(Process process){
                 break;
             }
         }
-
         return true;
     }
+    cout<<"Passou 11, "<<endl;
     return false;
 }
 bool Memory::del(Process process){

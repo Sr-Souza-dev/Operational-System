@@ -179,7 +179,7 @@ void Scheduler::decrementQuantum(Process process){
         process.currentQuantum--;
         process.timeStamp++;
 
-        //usleep(1000000 * sleepTime * 0.5); 
+        usleep(1000000 * sleepTime * 0.5); 
 
         increment();
         blockedUpdate();
@@ -227,14 +227,16 @@ void Scheduler::blockedUpdate(){
         processBlocked[i].penalty--;
         if(processBlocked[i].penalty <= 0){
             if(processBlocked[i].initType=="memory-bound"){
-                processBlocked[i].associated = kernel->memory->put(processBlocked[i]);
-                
-            } else if(processReady[i].initType=="io-bound"){
-                aux = kernel->disc->put(createData(processBlocked[i]));
+                aux = kernel->memory->put(processBlocked[i]);
                 processBlocked[i].associated = aux;
+                cout<<"\n"<<aux<<endl;
                 if(!aux){
+                    cout<<"Teste2"<<endl;
                    processBlocked[i].zombie--; 
                 }
+                                
+            } else if(processReady[i].initType=="io-bound"){
+                processBlocked[i].associated = kernel->disc->put(createData(processBlocked[i]));
             }
             processes.push_back(processBlocked[i]);
             processBlocked.erase(processBlocked.begin()+i);
