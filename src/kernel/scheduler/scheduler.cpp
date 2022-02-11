@@ -133,6 +133,7 @@ void Scheduler::submission(){
             processReady.erase(processReady.begin());
 
         }else if(processReady.front().initType=="memory-bound"){
+            processReady.front().memoryRequest = luckNumber(13) + 7;
             memoryBound(processReady.front());
             processReady.erase(processReady.begin());
         }
@@ -211,6 +212,7 @@ Data Scheduler::createData(Process process){
 
 void Scheduler::blockedInsert(Process process){
     process.penalty = luckNumber(4);
+    process.blockedTimes += process.penalty;
     processBlocked.push_back(process);
 }
 

@@ -17,8 +17,10 @@ class Process{
         int priority;       // Nivél de prioridade de cada processo (1 - 4)
         int state;          // 0 - Bloqueado; 1 - Execução; 2 - Pronto;
         int penalty;        // Tempo que o processo ficará no estado bloqueado
-        bool associated;    // False - processos não associados a uma memoria/disco | true - processos associados a uma memoria/disco
         int currentQuantum; // Valor de quantum atual do processo durante o ciclo
+        int blockedTimes;   // Quantidade de vezes que o processo foi para fila de bloqueados
+        int memoryRequest;
+        bool associated;    // False - processos não associados a uma memoria/disco | true - processos associados a uma memoria/disco
         string initType;    // Tipo de recurso que o processo mais utiliza
         vector<int> historic;
         
