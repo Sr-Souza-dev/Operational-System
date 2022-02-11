@@ -1,7 +1,7 @@
 #include "headers/process.hpp"
 
 //Constructor
-Process::Process(int id, int cycles, int maxQuantum, int timeStamp, int priority, string initType, int core){
+Process::Process(int id, int cycles, int maxQuantum, int timeStamp, int priority, string initType, int core, int memoryRequest){
     this -> state = 0;
     this -> id = id;
     this -> cycles = cycles;
@@ -14,7 +14,8 @@ Process::Process(int id, int cycles, int maxQuantum, int timeStamp, int priority
     this -> associated = false;
     this -> penalty = 0;
     this -> blockedTimes = 0;
-    this -> memoryRequest = 0;
+    this -> memoryRequest = memoryRequest;
+    this -> zombie = 4;
 }
 
 //Functions

@@ -20,6 +20,7 @@ class Process{
         int currentQuantum; // Valor de quantum atual do processo durante o ciclo
         int blockedTimes;   // Quantidade de vezes que o processo foi para fila de bloqueados
         int memoryRequest;
+        int zombie;         // 
         bool associated;    // False - processos não associados a uma memoria/disco | true - processos associados a uma memoria/disco
         string initType;    // Tipo de recurso que o processo mais utiliza
         vector<int> historic;
@@ -27,7 +28,7 @@ class Process{
 
     //Constructors
     Process(){}
-    Process(int id, int cycles, int maxQuantum, int timeStamp, int priority, string initType, int core = 0);
+    Process(int id, int cycles, int maxQuantum, int timeStamp, int priority, string initType, int core = 0, int memoryRequest = 0);
 
     //Functions
     void print(int opt = 0);        // Printa o conteúdo do processo

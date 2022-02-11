@@ -18,12 +18,11 @@ bool Memory::put(Process process){
     int index;
     if(isAvaible(&index, process.memoryRequest)){
         int qtdFree = memoryStatus[index];
-        cout<<"\n QTD: "<<qtdFree<< "| Index:"<<index<<"| ID: "<<process.id;
         for(int i = index; i < index+process.memoryRequest; i++){
             memory[i] = process;
             memoryStatus[i] = -1;
         }
-        cout<<endl;
+
         if(memory[index+process.memoryRequest].id == 0 && index+process.memoryRequest < size){
             memoryStatus[index+process.memoryRequest] = qtdFree - process.memoryRequest;
         }
@@ -45,39 +44,64 @@ bool Memory::put(Process process){
 bool Memory::del(Process process){
 
     Process processDefault = Process(0, 0, 0, 0, 0, "");
+    bool okay = false;
     int cont = 0;
 
     for(long unsigned int i=0; i<memory.size() ;i++){
         if(memory[i].id == process.id){
-            
-            cout<<"\nRequest "<<process.memoryRequest<<" | ID"<<process.id<<endl;
-            for(long unsigned int j = i; j < i+process.memoryRequest; j++){
-                memory[cont] = processDefault;
-                memoryStatus[cont] = 0;
-                cont=j;
-                cout<<", "<<cont - i + 1;
+
+            memory[i] = processDefault;
+            memoryStatus[i] = 0;
+            cont++;
+        }
+        if(cont == process.memoryRequest){
+            okay = true;
+            cont = i+1;
+            break;
+        }    
+    }
+
+    if(okay){
+        if(cont < size && memory[cont].id == 0){
+            for(long unsigned int j=0; j<memoryFree.size() ;j++){
+                if(memoryFree[j] == memoryStatus[cont]){
+                    memoryFree[j] += process.memoryRequest;
+                    break;
+                }
             }
-            
-            if(memory[cont].id == 0){
-                for(long unsigned int j=0; j<memoryFree.size() ;j++){
-                    if(memoryFree[j] == memoryStatus[cont]){
-                        memoryFree[j] += process.memoryRequest;
+            memoryStatus[cont - process.memoryRequest] = process.memoryRequest + memoryStatus[cont];
+            memoryStatus[cont] = 0;
+        } else{
+            memoryStatus[cont - process.memoryRequest] = process.memoryRequest;
+
+            memoryFree.clear();
+            for(int value : memoryStatus){
+                if(value > 0){
+                    memoryFree.push_back(value);
+                }
+            }
+        }
+        if(cont - process.memoryRequest > 0){
+            if(memory[cont - process.memoryRequest -1].id == 0){
+                for(int j = cont - process.memoryRequest -1; j>=0; j--){
+                    if(memory[j].id != 0){
+                        memoryStatus[j+1] += memoryStatus[cont - process.memoryRequest];
+                        memoryStatus[cont - process.memoryRequest] = 0;
+                        
+
+
+                        memoryFree.clear();
+                        for(int value : memoryStatus){
+                            if(value > 0){
+                                memoryFree.push_back(value);
+                            }
+                        }
                         break;
                     }
                 }
-                memoryStatus[i] = process.memoryRequest + memoryStatus[cont];
-                memoryStatus[cont] = 0;
-            } else{
-                memoryFree.clear();
-                for(int value : memoryStatus){
-                    if(value > 0){
-                        
-                        memoryFree.push_back(value);
-                    }
-                }
             }
-            return true;            
         }
+        return true; 
     }
 
     return false;
@@ -120,7 +144,6 @@ void Memory::reorganize(){
             memoryStatus[i] = 0;
             memoryStatus[i+1] = 0;
 
-            cont = 0;
         }
     }
 

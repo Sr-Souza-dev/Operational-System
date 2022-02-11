@@ -23,6 +23,7 @@ class Scheduler{
         vector<Process> processBlocked;         // Vetor de processos que estão aguardando recursos
         vector<Process> processFinish;          // Vetor de processos finalizados 
         vector<Process> processesAux; 
+        vector<Process> processZombie;          // Processos que não conseguiram executar em 4 ciclos
         vector<int> tickets;
         Kernel *kernel;                         // Hardware virtual simulado
 

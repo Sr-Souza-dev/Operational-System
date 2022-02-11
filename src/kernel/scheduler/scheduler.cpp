@@ -17,7 +17,9 @@ void Scheduler::load(){
                 (int)process[i]["max_quantum"],
                 (int)process[i]["timestamp"],
                 (int)process[i]["prioridade"],
-                (std::string)process[i]["init_type"])
+                (std::string)process[i]["init_type"],
+                0,
+                luckNumber(13) + 7)
             );
         }
         catch(const std::exception& e){
@@ -32,7 +34,7 @@ void Scheduler::init(){
         policy("fifo");
         submission();
         luckType();
-        //usleep(1000000 * sleepTime);
+        //usleep(1000000 * sleepTime * 0.5);
     }
 }
 
@@ -133,8 +135,11 @@ void Scheduler::submission(){
             processReady.erase(processReady.begin());
 
         }else if(processReady.front().initType=="memory-bound"){
-            processReady.front().memoryRequest = luckNumber(13) + 7;
-            memoryBound(processReady.front());
+            if(processReady.front().zombie <= 0){
+                processZombie.push_back(processReady.front());
+            } else{
+                memoryBound(processReady.front());
+            }  
             processReady.erase(processReady.begin());
         }
     }
@@ -174,7 +179,7 @@ void Scheduler::decrementQuantum(Process process){
         process.currentQuantum--;
         process.timeStamp++;
 
-        usleep(1000000 * sleepTime * 0.5); 
+        //usleep(1000000 * sleepTime * 0.5); 
 
         increment();
         blockedUpdate();
@@ -217,6 +222,7 @@ void Scheduler::blockedInsert(Process process){
 }
 
 void Scheduler::blockedUpdate(){
+    bool aux = false;
     for (long unsigned int i=0; i<processBlocked.size(); i++){
         processBlocked[i].penalty--;
         if(processBlocked[i].penalty <= 0){
@@ -224,7 +230,11 @@ void Scheduler::blockedUpdate(){
                 processBlocked[i].associated = kernel->memory->put(processBlocked[i]);
                 
             } else if(processReady[i].initType=="io-bound"){
-                processBlocked[i].associated = kernel->disc->put(createData(processBlocked[i]));
+                aux = kernel->disc->put(createData(processBlocked[i]));
+                processBlocked[i].associated = aux;
+                if(!aux){
+                   processBlocked[i].zombie--; 
+                }
             }
             processes.push_back(processBlocked[i]);
             processBlocked.erase(processBlocked.begin()+i);
@@ -266,7 +276,9 @@ void Scheduler::luckType(){
 
             }else if(var == 3){
                 processes.front().initType = "memory-bound";
+                processes.front().memoryRequest = luckNumber(13) + 7;
                 processes.front().historic.push_back(3);
+                processes.front().zombie = 4;
             } else printf("[ERRO] - tipo não definido para o valor sorteado");
         }
         if(processes.front().cycles > 0){
@@ -303,7 +315,7 @@ void Scheduler::showProcess(){
             processReady[i].print();
         }
         Process().printFooter();
-        if(!processBlocked.empty() || !processFinish.empty()){
+        if(!processBlocked.empty() || !processFinish.empty() || !processZombie.empty()){
             cout<<"////////////////////////////////////////////////////////////////////////////////////////////////////////"<<endl;
         }
     }
@@ -315,7 +327,7 @@ void Scheduler::showProcess(){
             processBlocked[i].print();
         }
         Process().printFooter();
-        if(!processFinish.empty()){
+        if(!processFinish.empty() || !processZombie.empty()){
             cout<<"////////////////////////////////////////////////////////////////////////////////////////////////////////"<<endl;
         }
     }
@@ -327,6 +339,21 @@ void Scheduler::showProcess(){
             processFinish[i].print();
         }
         Process().printFooter();
+        if(!processZombie.empty()){
+            cout<<"////////////////////////////////////////////////////////////////////////////////////////////////////////"<<endl;
+        }
+    }
+     if(!processZombie.empty()){
+        cout<<"******************************* Lista de Processos - (Status: Zombie) *****************************"<<endl;
+        Process().printHead();
+        for (long unsigned int i = 0; i < processZombie.size(); i++)
+        {
+            processZombie[i].print();
+        }
+        Process().printFooter();
+        if(!processZombie.empty()){
+            cout<<"////////////////////////////////////////////////////////////////////////////////////////////////////////"<<endl;
+        }
     }
     if(processFinish.empty() && processBlocked.empty() && processReady.empty()){
         cout<<"   Não há processos em execução"<<endl;
