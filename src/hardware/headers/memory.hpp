@@ -5,6 +5,7 @@
 #include "../../components/headers/process.hpp"
 #include <vector>
 #include <thread>
+#include <unistd.h>
 
 using namespace std;
 
@@ -24,6 +25,7 @@ class Memory
         bool del(Process process);
         bool isAvaible(int* index, int memoryRequest);
         void reorganize();
+        void updateStatus();
 };
 
 #endif

@@ -229,9 +229,7 @@ void Scheduler::blockedUpdate(){
             if(processBlocked[i].initType=="memory-bound"){
                 aux = kernel->memory->put(processBlocked[i]);
                 processBlocked[i].associated = aux;
-                cout<<"\n"<<aux<<endl;
                 if(!aux){
-                    cout<<"Teste2"<<endl;
                    processBlocked[i].zombie--; 
                 }
                                 
